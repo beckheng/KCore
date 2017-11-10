@@ -1,0 +1,18 @@
+using UnityEngine.UI;
+using KOU;
+
+namespace __NAMESPACE__
+{
+	public partial class __CLASSNAME__ : KUIWindow
+	{
+		/// Params Define
+__PARAMS_DECLARED__
+		
+		protected override void InitializeComponent()
+		{
+		
+			///Params Assignment
+__PARAMS_ASSIGNMENT__
+		}
+	}
+}

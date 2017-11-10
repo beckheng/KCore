@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KOU.KUI">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAABAAAAAAAAAAAAAABAAAAAACAAEA=</HashCode>
+      <FileName>Assets\Scripts\KUI\KUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KOU.KUIObject">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAIAAAAAEAAEgAACAAAEAAAAAAAAAACAAEA=</HashCode>
+      <FileName>Assets\Scripts\KUI\KUIObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KOU.KUIPanel">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAEAAAAAAAAAAEAAAAAAAAAACAAEA=</HashCode>
+      <FileName>Assets\Scripts\KUI\KUIPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KOU.KUIWindow">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAMAAAAAEAAAAAAAAAAEAAAAAAAAAACAAEA=</HashCode>
+      <FileName>Assets\Scripts\KUI\KUIWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KOU.KUITopestWindow">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAEAAAAAAAAAAEAAAAAAAAAACAAEA=</HashCode>
+      <FileName>Assets\Scripts\KUI\KUITopestWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>
