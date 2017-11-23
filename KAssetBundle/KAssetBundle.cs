@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 namespace KCore
 {
 
+	[DisallowMultipleComponent]
 	public class KAssetBundle : MonoBehaviour
 	{
 
@@ -117,6 +118,51 @@ namespace KCore
 			}
 
 			return path;
+		}
+
+		/// <summary>
+		/// 仅仅是从StreamAssets加载
+		/// </summary>
+		/// <param name="relativePath">Assets/StreamingAssets下的相对路径</param>
+		public static IEnumerator LoadFromStreamAssets(string relativePath, System.Action<WWW> onSucc, System.Action<WWW> onError = null)
+		{
+			if (!relativePath.StartsWith("/"))
+			{
+				relativePath = "/" + relativePath;
+			}
+
+			string url = "file://" + Application.streamingAssetsPath + relativePath;
+			using (WWW w = new WWW(url))
+			{
+				yield return w;
+
+				if (w.error != null)
+				{
+					// 出错了
+					Debug.LogError("www|error|url|" + url  + "|message|" + w.error);
+
+					if (onError != null)
+					{
+						onError(w);
+					}
+				}
+				else
+				{
+					// 成功
+					if (onSucc != null)
+					{
+						onSucc(w);
+					}
+				}
+			};
+		}
+
+		/// <summary>
+		/// 从外部或者是StreamAssets加载,外部优先
+		/// </summary>
+		public static void LoadFromExternalOrStreamAssets()
+		{
+
 		}
 
 	}
