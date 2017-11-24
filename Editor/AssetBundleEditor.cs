@@ -2,7 +2,9 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-namespace KCore
+using KCore;
+
+namespace KCoreEditor
 {
 
 	public class AssetBundleEditor : Editor
@@ -32,7 +34,7 @@ namespace KCore
 		/// <summary>
 		/// 将所选目录的场景打包为AB
 		/// </summary>
-		[MenuItem("KCore/Assetbundle/Build Scene", false, 10001)]
+		[MenuItem("KCore/Assetbundle/Build Scene", false, 1051)]
 		private static void BuildSceneAB()
 		{
 			BuildPipeline.BuildAssetBundles("Assets/OOO");
