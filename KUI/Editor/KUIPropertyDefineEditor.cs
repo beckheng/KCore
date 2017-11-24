@@ -3,7 +3,9 @@ using UnityEditor;
 using System.IO;
 using UnityEngine.UI;
 
-namespace KCore
+using KCore;
+
+namespace KCoreEditor
 {
 
 	[CustomEditor(typeof(KUIPropertyDefine))]

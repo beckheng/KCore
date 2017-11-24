@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace KCore
+namespace KCoreEditor
 {
 
 	public class HelperMenu : Editor
 	{
 
-		[MenuItem("KCore/Open Persistent DataPath", false, 1050)]
+		[MenuItem("KCore/Open Persistent DataPath", false, 1010)]
 		public static void OpenPersistentDataPath()
 		{
 			EditorUtility.RevealInFinder(Application.persistentDataPath);

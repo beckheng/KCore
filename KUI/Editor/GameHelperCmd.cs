@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace KCore
+namespace KCoreEditor
 {
 
 	public class GameHelperCmd : Editor

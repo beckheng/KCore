@@ -2,14 +2,14 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-namespace KCore.UIBuilder
+namespace KCoreEditor
 {
 	public class UGUIShortcutMenu
 	{
 
 		private static string uGUIMenuPrefix = "GameObject/UI";
 
-		[MenuItem("KCore/添加水平自适应布局", false, 1100)]
+		[MenuItem("KCore/添加水平自适应布局", false, 2100)]
 		public static void AddHorizontalLayoutGroup()
 		{
 			GameObject[] allGo = Selection.gameObjects;
@@ -47,7 +47,7 @@ namespace KCore.UIBuilder
 			}
 		}
 
-		[MenuItem("KCore/添加垂直自适应布局", false, 1101)]
+		[MenuItem("KCore/添加垂直自适应布局", false, 2101)]
 		public static void AddVerticalLayoutGroup()
 		{
 			GameObject[] allGo = Selection.gameObjects;
@@ -88,7 +88,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 添加Button控件
 		/// </summary>
-		[MenuItem("KCore/Insert Button Control &b", false, 1102)]
+		[MenuItem("KCore/Insert Button Control &b", false, 2102)]
 		public static void FastInsertButtonControl()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -104,7 +104,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 添加Image控件
 		/// </summary>
-		[MenuItem("KCore/Insert Image Control &i", false, 1103)]
+		[MenuItem("KCore/Insert Image Control &i", false, 2103)]
 		public static void FastInsertImageControl()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -123,7 +123,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 添加Panel控件
 		/// </summary>
-		[MenuItem("KCore/Insert Panel Control &p", false, 1104)]
+		[MenuItem("KCore/Insert Panel Control &p", false, 2104)]
 		public static void FastInsertPanelControl()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -139,7 +139,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 添加Text控件
 		/// </summary>
-		[MenuItem("KCore/Insert Text Control &t", false, 1105)]
+		[MenuItem("KCore/Insert Text Control &t", false, 2105)]
 		public static void FastInsertTextControl()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -231,7 +231,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 增加宽度
 		/// </summary>
-		[MenuItem("KCore/Expand Width #\\", false, 1109)]
+		[MenuItem("KCore/Expand Width #\\", false, 2109)]
 		public static void ExpandControlWidth()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -242,7 +242,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 缩减宽度
 		/// </summary>
-		[MenuItem("KCore/Reduce Width #[", false, 1110)]
+		[MenuItem("KCore/Reduce Width #[", false, 2110)]
 		public static void ReduceControlWidth()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -253,7 +253,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 增加高度
 		/// </summary>
-		[MenuItem("KCore/Expand Height #]", false, 1111)]
+		[MenuItem("KCore/Expand Height #]", false, 2111)]
 		public static void ExpandControlHeight()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -264,7 +264,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 缩减高度
 		/// </summary>
-		[MenuItem("KCore/Reduce Height #=", false, 1112)]
+		[MenuItem("KCore/Reduce Height #=", false, 2112)]
 		public static void ReduceControlHeight()
 		{
 			GameObject selectedGo = Selection.activeGameObject;
@@ -275,7 +275,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 左移一像素
 		/// </summary>
-		[MenuItem("KCore/Move Left &[", false, 1113)]
+		[MenuItem("KCore/Move Left &[", false, 2113)]
 		public static void MoveControlToLeft()
 		{
 			MoveControl(-1, 0);
@@ -284,7 +284,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 右移一像素
 		/// </summary>
-		[MenuItem("KCore/Move Right &\\", false, 1114)]
+		[MenuItem("KCore/Move Right &\\", false, 2114)]
 		public static void MoveControlToRight()
 		{
 			MoveControl(1, 0);
@@ -293,7 +293,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 上移一像素
 		/// </summary>
-		[MenuItem("KCore/Move Up &=", false, 1115)]
+		[MenuItem("KCore/Move Up &=", false, 2115)]
 		public static void MoveControlToUp()
 		{
 			MoveControl(0, 1);
@@ -302,7 +302,7 @@ namespace KCore.UIBuilder
 		/// <summary>
 		/// 下移一像素
 		/// </summary>
-		[MenuItem("KCore/Move Down &]", false, 1116)]
+		[MenuItem("KCore/Move Down &]", false, 2116)]
 		public static void MoveControlToDown()
 		{
 			MoveControl(0, -1);
