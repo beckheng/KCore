@@ -172,8 +172,11 @@ public class KSceneManagerEditor : EditorWindow {
 			"using KData;\n\n" +
 
 			"namespace KScene\n" +
-			"{\n\n" + 
-			
+			"{\n\n" +
+
+			"	/// <summary>\n" +
+			"	/// 场景逻辑层\n" +
+			"	/// </summary>\n" +
 			"	[DisallowMultipleComponent]\n" +
 			"	public sealed class " + theSceneName + "Manager : KSceneManager\n" +
 			"	{\n\n" +

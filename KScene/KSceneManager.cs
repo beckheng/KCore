@@ -62,8 +62,8 @@ namespace KScene
 			{
 				GameObject go = new GameObject();
 				go.name = "__" + scene.name + "__";
-
-				System.Type t = System.Type.GetType(scene.name);
+				
+				System.Type t = System.Type.GetType("KScene." + scene.name + "Manager");
 
 				ks = (KSceneManager)go.AddComponent(t);
 			}
