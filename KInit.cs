@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+using KScene;
+
 namespace KCore
 {
 
@@ -31,7 +33,7 @@ namespace KCore
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		private static void KGameEnd()
 		{
-			KScene.Load();
+			KSceneManager.Load();
 		}
 		
 		/// <summary>
@@ -40,7 +42,7 @@ namespace KCore
 		/// <param name="level"></param>
 		void OnLevelWasLoaded(int level)
 		{
-			KScene.Load();
+			KSceneManager.Load();
 		}
 
 	}

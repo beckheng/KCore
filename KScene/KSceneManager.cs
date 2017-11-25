@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-namespace KCore
+namespace KScene
 {
 
 	[DisallowMultipleComponent]
-	public abstract class KScene : MonoBehaviour
+	public abstract class KSceneManager : MonoBehaviour
 	{
 		protected object data = null;
 
@@ -15,7 +15,7 @@ namespace KCore
 		/// TODO 跳转到自己会是怎么样呢?
 		/// </summary>
 		/// <param name="showLoading">默认是TRUE,大概只有在Splash后的跳转,才是FALSE吧</param>
-		public static void GotoScene<T>(object data, bool showLoading = true) where T : KScene
+		public static void GotoScene<T>(object data, bool showLoading = true) where T : KSceneManager
 		{
 			string typeName = typeof(T).Name;
 			
@@ -28,7 +28,7 @@ namespace KCore
 				//显示Loading的处理方法
 			}
 
-			KScene ks = GetCurKScene();
+			KSceneManager ks = GetCurKScene();
 			if (null != ks)
 			{
 				DestroyImmediate(ks.gameObject);
@@ -57,7 +57,7 @@ namespace KCore
 			Scene scene = SceneManager.GetActiveScene(); //默认组件与场景名一致
 
 			//如果没有,则先添加组件
-			KScene ks = GetCurKScene();
+			KSceneManager ks = GetCurKScene();
 			if (null == ks)
 			{
 				GameObject go = new GameObject();
@@ -65,7 +65,7 @@ namespace KCore
 
 				System.Type t = System.Type.GetType(scene.name);
 
-				ks = (KScene)go.AddComponent(t);
+				ks = (KSceneManager)go.AddComponent(t);
 			}
 
 			ks.LoadData();
@@ -80,9 +80,9 @@ namespace KCore
 		/// 取得当前场景的KScene组件,不允许在同个场景有两个KScene组件
 		/// </summary>
 		/// <returns></returns>
-		private static KScene GetCurKScene()
+		private static KSceneManager GetCurKScene()
 		{
-			KScene ks = GameObject.FindObjectOfType<KScene>();
+			KSceneManager ks = GameObject.FindObjectOfType<KSceneManager>();
 
 			return ks;
 		}
