@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using UnityEditor;
+using UnityEditor.SceneManagement;
+
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 using KCore;
@@ -19,7 +24,9 @@ public class KSceneManagerEditor : EditorWindow {
 		editorWin.titleContent = new GUIContent("新建场景");
 	}
 
+	private static bool saveSceneOK = false;
 	private string sceneName = "";
+	private List<string> tips = new List<string>();
 
 	/// <summary>
 	/// 显示控件
@@ -35,16 +42,20 @@ public class KSceneManagerEditor : EditorWindow {
 			EditorGUILayout.LabelField("Scene");
 		}
 		EditorGUILayout.EndHorizontal();
-
+		
 		if (GUILayout.Button("生  成"))
 		{
+			tips.Clear();
+
+			bool isNeedCreateScene = false; //标志位
+			bool isWriteFile = false; //标志位
+
 			string finalSceneName = sceneName.Trim();
 			
 			if (string.IsNullOrEmpty(finalSceneName))
 			{
 				EditorUtility.DisplayDialog("错误", "请输入一个合法的场景名字", "确定");
 				return;
-
 			}
 
 			//判断首字母大写
@@ -60,29 +71,88 @@ public class KSceneManagerEditor : EditorWindow {
 				//补充Scene后缀
 				finalSceneName += "Scene";
 			}
+			
+			// 生成一个新的场景
+			isNeedCreateScene = CreateEmptyScene(finalSceneName);
 
 			string scriptDir = Application.dataPath + "/Scripts/KScene";
 			string scriptPath = scriptDir + "/" + finalSceneName + "Manager.cs";
 
 			if (File.Exists(scriptPath))
 			{
-				EditorUtility.DisplayDialog("错误", "场景文件已经存在|" + scriptPath, "确定");
-				return;
+				EditorUtility.DisplayDialog("错误", "场景逻辑层文件已经存在|" + scriptPath + ",不会被覆盖", "确定");
 			}
-
-			Debug.Log("scriptDir|" + scriptDir);
-			Debug.Log("scriptPath|" + scriptPath);
-
-			//不存在才生成文件
-			if (!Directory.Exists(scriptDir))
+			else
 			{
-				//需要先创建目录
-				Directory.CreateDirectory(scriptDir);
+				//不存在才生成文件
+				if (!Directory.Exists(scriptDir))
+				{
+					//需要先创建目录
+					Directory.CreateDirectory(scriptDir);
+				}
+
+				WriteManagerFileContent(scriptPath, finalSceneName);
+
+				isWriteFile = true;
 			}
 
-			WriteManagerFileContent(scriptPath, finalSceneName);
+			if (isNeedCreateScene)
+			{
+				tips.Add("创建场景: " + finalSceneName + " " + (saveSceneOK ? "成功" : "失败"));
+			}
+			else
+			{
+				tips.Add("不需创建场景: " + finalSceneName);
+			}
 
-			AssetDatabase.Refresh(ImportAssetOptions.Default);
+			if (isWriteFile)
+			{
+				tips.Add("创建场景逻辑层文件: " + scriptPath);
+			}
+			else
+			{
+				tips.Add("不会覆盖逻辑层文件: " + finalSceneName);
+			}
+
+			if (isNeedCreateScene || isWriteFile)
+			{
+				AssetDatabase.Refresh(ImportAssetOptions.Default);
+			}
+		}
+
+		for (int i = 0; i < tips.Count; i++)
+		{
+			EditorGUILayout.LabelField(" ", tips[i]);
+		}
+	}
+
+	/// <summary>
+	/// 在编辑器模式下创建一个新的场景,场景放在Assets/Scenes目录下
+	/// <returns>true:需要创建; false:不需创建</returns>
+	/// </summary>
+	private static bool CreateEmptyScene(string theSceneName)
+	{
+		//string scenePathABS = Application.dataPath;
+
+		string scenePath = "Assets/Scenes/" + theSceneName + ".unity";
+		Scene theScene = EditorSceneManager.GetSceneByPath(scenePath);
+		Debug.Log("scenePath|" + scenePath + "|theScene| " + theScene.IsValid());
+		if (!theScene.IsValid())
+		{
+			//不存在则创建Scene
+
+			//提示保存有更改的场景
+			EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+			
+			//创建并保存
+			Scene newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+		 	saveSceneOK = EditorSceneManager.SaveScene(newScene, scenePath);
+
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
