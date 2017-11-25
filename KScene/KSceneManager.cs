@@ -65,10 +65,24 @@ namespace KScene
 				
 				System.Type t = System.Type.GetType("KScene." + scene.name + "Manager");
 
-				ks = (KSceneManager)go.AddComponent(t);
+				if (t == null)
+				{
+					Debug.LogError("cannot|find|type|" + "KScene." + scene.name + "Manager");
+				}
+				else
+				{
+					ks = (KSceneManager)go.AddComponent(t);
+				}
 			}
 
-			ks.LoadData();
+			if (ks != null)
+			{
+				ks.LoadData();
+			}
+			else
+			{
+				Debug.LogError("cannot|find|ks");
+			}
 		}
 
 		/// <summary>
