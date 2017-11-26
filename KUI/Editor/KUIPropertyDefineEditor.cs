@@ -23,43 +23,75 @@ namespace KCoreEditor
 
 		private void GenAllCode(KUIPropertyDefine target)
 		{
-			//win用于实时的取得各个定义的组件
-			var win = target.GetComponentInParent<KUIWindow>();
-			
-			//读取对应的目录
-			string path = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(win).GetInstanceID());
-			
-			//生成Auto目录
-			var fileInfo = new FileInfo(path);
-			
-			string autoGenPath = fileInfo.DirectoryName + "/AutoGen";
-			string autoGenFileName = win.GetType().Name + ".autogen.cs";
-			
-			if (!Directory.Exists(autoGenPath))
+			//win用于实时的取得各个定义的组件,没有则生成一个文件
+			KUIWindow win = target.GetComponentInParent<KUIWindow>();
+			if (win != null)
 			{
-				KLogger.Log("KUI|需要创建目录|path|" + autoGenPath);
-				Directory.CreateDirectory(autoGenPath);
+				//读取对应的目录
+				string path = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(win).GetInstanceID());
+
+				//生成Auto目录
+				var fileInfo = new FileInfo(path);
+
+				string autoGenPath = fileInfo.DirectoryName + "/AutoGen";
+				string autoGenFileName = win.GetType().Name + ".autogen.cs";
+
+				if (!Directory.Exists(autoGenPath))
+				{
+					KLogger.Log("KUI|需要创建目录|path|" + autoGenPath);
+					Directory.CreateDirectory(autoGenPath);
+				}
+
+				string outputName = autoGenPath + "/" + autoGenFileName;
+				KLogger.Log("KUI|输出目录|outputName|" + outputName);
+
+				string codeContent = GenCodeFromTemplate(win.transform, win.GetType().Name, KCoreEditorUtil.kuiEditorPath + "/AutoGenCodeTemplate.txt");
+
+				File.WriteAllText(outputName, codeContent);
 			}
+			else
+			{
+				//生成一个文件
+				string theClassName = target.transform.root.name;
+				
+				string autoGenPath = KCoreEditorUtil.kuiDefAutoGenPath + "/AutoGen";
+				string autoGenFileName = theClassName + ".autogen.cs";
 
-			string outputName = autoGenPath + "/" + autoGenFileName;
-			KLogger.Log("KUI|输出目录|outputName|" + outputName);
+				if (!Directory.Exists(autoGenPath))
+				{
+					KLogger.Log("KUI|需要创建目录|path|" + autoGenPath);
+					Directory.CreateDirectory(autoGenPath);
+				}
 
-			string codeContent = GenCodeFromTemplate(win);
+				string outputName = autoGenPath + "/" + autoGenFileName;
+				KLogger.Log("KUI|输出目录|outputName|" + outputName);
 
-			File.WriteAllText(outputName, codeContent);
+				string codeContent = GenCodeFromTemplate(target.transform.root, theClassName, KCoreEditorUtil.kuiEditorPath + "/AutoGenCodeTemplate.txt");
 
+				File.WriteAllText(outputName, codeContent);
+
+				//同时生成主的class
+				string mainClassFileName = KCoreEditorUtil.kuiDefAutoGenPath + "/" + theClassName + ".cs";
+				if (!File.Exists(mainClassFileName))
+				{
+					KLogger.Log("KUI|输出目录|mainClassFileName|" + mainClassFileName);
+					string mainCodeContent = GenCodeFromTemplate(target.transform.root, theClassName, KCoreEditorUtil.kuiEditorPath + "/UIMainCodeTemplate.txt");
+					File.WriteAllText(mainClassFileName, mainCodeContent);
+				}
+			}
+			
 			AssetDatabase.Refresh();
 		}
 
-		private string GenCodeFromTemplate(KUIWindow win)
+		private string GenCodeFromTemplate(Transform tran, string className, string tmplPath)
 		{
-			string template = File.ReadAllText("Assets/Scripts/KUI/Editor/AutoGenCodeTemplate.txt");
+			string template = File.ReadAllText(tmplPath);
 
 
 			System.Text.StringBuilder paramsDeclaredStr = new System.Text.StringBuilder();
 			System.Text.StringBuilder paramsAssignmentStr = new System.Text.StringBuilder();
 
-			var defines = win.GetComponentsInChildren<KUIPropertyDefine>(true);
+			var defines = tran.GetComponentsInChildren<KUIPropertyDefine>(true);
 			for (int i = 0; i < defines.Length; i++)
 			{
 				defines[i].enabled = false;
@@ -67,7 +99,7 @@ namespace KCoreEditor
 				string typeName = defines[i].varType;
 				string varName = defines[i].varName;
 				string summaryStr = defines[i].varSummary;
-				string childPath = AnimationUtility.CalculateTransformPath(defines[i].transform, win.transform);
+				string childPath = AnimationUtility.CalculateTransformPath(defines[i].transform, tran);
 				
 				if (string.IsNullOrEmpty(typeName))
 				{
@@ -94,8 +126,7 @@ namespace KCoreEditor
 				paramsAssignmentStr.AppendFormat("			{1} = tran.GetComponentByName<{0}>(\"{2}\");\r\n", typeName, varName, childPath);
 			}
 			
-			template = template.Replace("__NAMESPACE__", win.GetType().Namespace);
-			template = template.Replace("__CLASSNAME__", win.GetType().Name);
+			template = template.Replace("__CLASSNAME__", className);
 			template = template.Replace("__PARAMS_DECLARED__", paramsDeclaredStr.ToString());
 			template = template.Replace("__PARAMS_ASSIGNMENT__", paramsAssignmentStr.ToString());
 

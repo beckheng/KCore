@@ -1,0 +1,26 @@
+using UnityEngine.UI;
+
+using KCore;
+using KScene;
+using KData;
+
+namespace KUI
+{
+	public partial class __CLASSNAME__ : KUIWindow
+	{
+		
+		protected override void BindEvent()
+		{
+		}
+		
+		protected override bool OnClosing()
+		{
+			return true;
+		}
+
+		protected override void SetData(object data)
+		{
+		}
+		
+	}
+}

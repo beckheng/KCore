@@ -1,7 +1,10 @@
 using UnityEngine.UI;
-using KOU;
 
-namespace __NAMESPACE__
+using KCore;
+using KScene;
+using KData;
+
+namespace KUI
 {
 	public partial class __CLASSNAME__ : KUIWindow
 	{
