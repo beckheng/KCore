@@ -20,6 +20,10 @@ namespace KCore
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void KGameStart()
 		{
+
+#if UNITY_EDITOR
+			Application.runInBackground = true;
+#endif
 			GameObject go = new GameObject();
 			go.name = "__KInit__";
 			DontDestroyOnLoad(go);
