@@ -4,7 +4,7 @@ using KCore;
 using KScene;
 using KData;
 
-namespace KUI
+namespace KView
 {
 	public partial class __CLASSNAME__ : KUIWindow
 	{

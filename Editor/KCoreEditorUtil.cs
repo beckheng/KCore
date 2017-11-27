@@ -16,7 +16,7 @@ namespace KCoreEditor
 		/// <summary>
 		/// KUI自动生成代码的默认路径
 		/// </summary>
-		public const string kuiDefAutoGenPath = "Assets/Scripts/KUI";
+		public const string kuiDefAutoGenPath = "Assets/Scripts/KView";
 		
 	}
 

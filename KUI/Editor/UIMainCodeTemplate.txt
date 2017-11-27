@@ -5,7 +5,7 @@ using KCore;
 using KScene;
 using KData;
 
-namespace KUI
+namespace KView
 {
 
 	[DisallowMultipleComponent]
