@@ -37,6 +37,9 @@ namespace KCore
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		private static void KGameEnd()
 		{
+			var configLoader = new GameObject("ConfigLoader");
+			configLoader.AddComponent<KConfigLoader>();
+
 			KSceneManager.Load();
 		}
 		
