@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine.UI;
 
+using System.IO;
+
 using KCore;
 
 namespace KCoreEditor
@@ -69,6 +71,12 @@ namespace KCoreEditor
 			{
 				Debug.LogError("no|detected|outputPath|for|" + theAssetPath);
 				return;
+			}
+
+			if (!Directory.Exists(outputPath))
+			{
+				Debug.Log("Create|Directory|" + outputPath);
+				Directory.CreateDirectory(outputPath);
 			}
 
 			AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
