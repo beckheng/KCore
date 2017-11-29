@@ -20,10 +20,21 @@ namespace KCore
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void KGameStart()
 		{
-
 #if UNITY_EDITOR
 			Application.runInBackground = true;
 #endif
+
+			if (Application.isMobilePlatform)
+			{
+				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|30");
+				Application.targetFrameRate = 30;
+			}
+			else
+			{
+				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|60");
+				Application.targetFrameRate = 60;
+			}
+
 			GameObject go = new GameObject();
 			go.name = "__KInit__";
 			DontDestroyOnLoad(go);

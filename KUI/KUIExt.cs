@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public static class KUIExt {
 
@@ -30,5 +32,14 @@ public static class KUIExt {
 
 		return comp;
 	}
-	
+
+	/// <summary>
+	/// 为Button添加onClick事件响应
+	/// </summary>
+	public static void AddClickListener(this Button self, UnityAction call)
+	{
+		self.onClick.AddListener(call);
+	}
+
+
 }

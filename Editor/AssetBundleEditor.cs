@@ -42,6 +42,9 @@ namespace KCoreEditor
 			BuildPipeline.BuildAssetBundles("Assets/OOO");
 		}
 
+		/// <summary>
+		/// 将所选文件打包为AB
+		/// </summary>
 		[MenuItem("KCore/Assetbundle/Buil AB(Selected OR All)", false, 1071)]
 		public static void BuildAllAB()
 		{
@@ -81,12 +84,12 @@ namespace KCoreEditor
 
 			AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
 
-			buildMap[0].assetBundleName = obj.name + ".u3d";
+			buildMap[0].assetBundleName = obj.name + KAssetBundle.abNamePostfix;
 			buildMap[0].assetNames = new string[] { AssetDatabase.GetAssetPath(obj) };
 			
 			BuildPipeline.BuildAssetBundles(outputPath, buildMap, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
 
-			Debug.Log("BuildAB|OK|outputPath|" + outputPath + "|name|" + obj.name + ".u3d");
+			Debug.Log("BuildAB|OK|outputPath|" + outputPath + "|name|" + obj.name + KAssetBundle.abNamePostfix);
 
 			AssetDatabase.Refresh();
 		}

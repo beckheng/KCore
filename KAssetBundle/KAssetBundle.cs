@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+using System.IO;
+
 namespace KCore
 {
 
 	[DisallowMultipleComponent]
 	public class KAssetBundle : MonoBehaviour
 	{
+
+		public const string abNamePostfix = ".u3d";
 
 		/// <summary>
 		/// 挂组件的GO
@@ -121,6 +125,40 @@ namespace KCore
 		}
 
 		/// <summary>
+		/// 加载持久的AB,支持AB名自动补.u3d后缀
+		/// </summary>
+		public static IEnumerator LoadPersistentAB(string[] relativePaths, System.Action onSucc, System.Action onError = null)
+		{
+			for (int i = 0; i < relativePaths.Length; i++)
+			{
+				string thePath = relativePaths[i];
+				if (!thePath.EndsWith(abNamePostfix))
+				{
+					thePath += abNamePostfix;
+				}
+
+				FileInfo fi = new FileInfo(thePath);
+				string theAbName = fi.Name;
+
+				if (abMap.ContainsKey(theAbName))
+				{
+					Debug.LogError(Time.frameCount + "|duplicate|load|" + thePath);
+					continue;
+				}
+
+				yield return LoadFromStreamAssets(thePath, (w) => {
+					Debug.Log(Time.frameCount + "|add|abmap|" + w.assetBundle.name + "|savein|" + theAbName);
+					abMap.Add(theAbName, w.assetBundle);
+				}, null);
+			}
+
+			if (onSucc != null)
+			{
+				onSucc();
+			}
+		}
+
+		/// <summary>
 		/// 仅仅是从StreamAssets加载
 		/// </summary>
 		/// <param name="relativePath">Assets/StreamingAssets下的相对路径</param>
@@ -163,6 +201,44 @@ namespace KCore
 		public static void LoadFromExternalOrStreamAssets()
 		{
 
+		}
+
+		/// <summary>
+		/// 从AB资源中实例化一个View(UI),要求AB资源必须已经提前加载进来,支持AB名自动补.u3d后缀,暂时规定assetName和ABName是一致的
+		/// </summary>
+		public static T InstantiateView<T>(string assetName) where T : Component
+		{
+			string viewABName = assetName;
+
+			if (!viewABName.EndsWith(abNamePostfix))
+			{
+				viewABName += abNamePostfix;
+			}
+
+			T t = default(T);
+
+			if (!abMap.ContainsKey(viewABName))
+			{
+				Debug.LogError(Time.frameCount + "|no|ab|loaded");
+				return t;
+			}
+			
+			GameObject go = abMap[viewABName].LoadAsset<GameObject>(assetName);
+
+			GameObject cloneGo = GameObject.Instantiate(go);
+			cloneGo.name = go.name;
+
+			T comp = cloneGo.GetComponent<T>();
+			if (comp != null)
+			{
+				Debug.Log(Time.frameCount + "|use|exists|comp");
+				return comp;
+			}
+			else
+			{
+				Debug.Log(Time.frameCount + "|add|comp");
+				return cloneGo.AddComponent<T>();
+			}
 		}
 
 	}
