@@ -204,6 +204,29 @@ namespace KCore
 		}
 
 		/// <summary>
+		/// 从AB资源中加载共享的资源,这些资源不像GO那样,需要实例化的,如声音,纹理,Animator这些
+		/// </summary>
+		public static T GetObject<T>(string assetName) where T : Object
+		{
+			string viewABName = assetName;
+
+			if (!viewABName.EndsWith(abNamePostfix))
+			{
+				viewABName += abNamePostfix;
+			}
+
+			T t = default(T);
+
+			if (!abMap.ContainsKey(viewABName))
+			{
+				Debug.LogError(Time.frameCount + "|no|ab|loaded");
+				return t;
+			}
+
+			return abMap[viewABName].LoadAsset<T>(assetName);
+		}
+
+		/// <summary>
 		/// 从AB资源中实例化一个View(UI),要求AB资源必须已经提前加载进来,支持AB名自动补.u3d后缀,暂时规定assetName和ABName是一致的
 		/// </summary>
 		public static T InstantiateView<T>(string assetName) where T : Component

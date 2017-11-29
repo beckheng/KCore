@@ -48,50 +48,72 @@ namespace KCoreEditor
 		[MenuItem("KCore/Assetbundle/Buil AB(Selected OR All)", false, 1071)]
 		public static void BuildAllAB()
 		{
-			var obj = Selection.activeObject;
-			if (obj == null)
+			if (Selection.objects.Length == 0)
 			{
 				Debug.LogError("Nothing|selected");
 				return;
 			}
-			
-			string theAssetPath = AssetDatabase.GetAssetPath(obj);
-			if (!theAssetPath.StartsWith("Assets/Prefabs/"))
+
+			var selectedObjects = Selection.objects;
+			foreach (var obj in selectedObjects)
 			{
-				Debug.LogError("none|a|Prefabs|Under|Assets/Prefabs");
-				return;
+				string theAssetPath = AssetDatabase.GetAssetPath(obj);
+
+				string outputPath = GetABOutputPath(theAssetPath);
+
+				if (string.IsNullOrEmpty(outputPath))
+				{
+					Debug.LogError("no|detected|outputPath|for|" + theAssetPath);
+					return;
+				}
+
+				if (!Directory.Exists(outputPath))
+				{
+					Debug.Log("Create|Directory|" + outputPath);
+					Directory.CreateDirectory(outputPath);
+				}
+
+				AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
+
+				buildMap[0].assetBundleName = obj.name + KAssetBundle.abNamePostfix;
+				buildMap[0].assetNames = new string[] { AssetDatabase.GetAssetPath(obj) };
+
+				BuildPipeline.BuildAssetBundles(outputPath, buildMap, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+
+				Debug.Log("BuildAB|OK|outputPath|" + outputPath + "|name|" + obj.name + KAssetBundle.abNamePostfix);
 			}
-
-			string outputPath = string.Empty;
-
-			
-			if (theAssetPath.Contains("/View/"))
-			{
-				outputPath = "Assets/StreamingAssets/View";
-			}
-
-			if (string.IsNullOrEmpty(outputPath))
-			{
-				Debug.LogError("no|detected|outputPath|for|" + theAssetPath);
-				return;
-			}
-
-			if (!Directory.Exists(outputPath))
-			{
-				Debug.Log("Create|Directory|" + outputPath);
-				Directory.CreateDirectory(outputPath);
-			}
-
-			AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
-
-			buildMap[0].assetBundleName = obj.name + KAssetBundle.abNamePostfix;
-			buildMap[0].assetNames = new string[] { AssetDatabase.GetAssetPath(obj) };
-			
-			BuildPipeline.BuildAssetBundles(outputPath, buildMap, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
-
-			Debug.Log("BuildAB|OK|outputPath|" + outputPath + "|name|" + obj.name + KAssetBundle.abNamePostfix);
 
 			AssetDatabase.Refresh();
+		}
+
+		/// <summary>
+		/// 根据源路径,统一Assets/StreamingAssets的输出路径,没有则返回string.Empty
+		/// </summary>
+		/// <returns></returns>
+		private static string GetABOutputPath(string assetPath)
+		{
+			if (assetPath.Contains("/Prefabs/View/"))
+			{
+				return "Assets/StreamingAssets/View";
+			}
+			else if (assetPath.Contains("/Arts/Sounds/"))
+			{
+				return "Assets/StreamingAssets/Sounds";
+			}
+			else if (assetPath.Contains("/Arts/Effects/"))
+			{
+				return "Assets/StreamingAssets/Effects";
+			}
+			else if (assetPath.Contains("/Arts/Models/"))
+			{
+				return "Assets/StreamingAssets/Models";
+			}
+			else if (assetPath.Contains("/Arts/Scenes/"))
+			{
+				return "Assets/StreamingAssets/Scenes";
+			}
+
+			return string.Empty;
 		}
 
 	}
