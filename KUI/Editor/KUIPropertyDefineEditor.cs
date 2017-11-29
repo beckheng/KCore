@@ -90,6 +90,8 @@ namespace KCoreEditor
 
 			System.Text.StringBuilder paramsDeclaredStr = new System.Text.StringBuilder();
 			System.Text.StringBuilder paramsAssignmentStr = new System.Text.StringBuilder();
+			System.Text.StringBuilder bindEventStr = new System.Text.StringBuilder();
+			System.Text.StringBuilder eventFunctionDefineStr = new System.Text.StringBuilder();
 
 			var defines = tran.GetComponentsInChildren<KUIPropertyDefine>(true);
 			for (int i = 0; i < defines.Length; i++)
@@ -107,6 +109,12 @@ namespace KCoreEditor
 					if (defines[i].GetComponent<Button>())
 					{
 						typeName = typeof(Button).Name;
+
+						string clickFuncName = "OnClick" + varName.Substring(0, 1).ToUpper() + varName.Substring(1);
+
+						bindEventStr.Append(varName + ".AddClickListener(" + clickFuncName + ");\r\n			");
+
+						eventFunctionDefineStr.Append("private void " + clickFuncName + "()\r\n		{\r\n		}\r\n		");
 					}
 					else if (defines[i].GetComponent<Image>())
 					{
@@ -130,6 +138,9 @@ namespace KCoreEditor
 			template = template.Replace("__PARAMS_DECLARED__", paramsDeclaredStr.ToString());
 			template = template.Replace("__PARAMS_ASSIGNMENT__", paramsAssignmentStr.ToString());
 
+			template = template.Replace("//BIND_EVENT_STATEMENT//", bindEventStr.ToString());
+			template = template.Replace("//EVENT_FUNCTION_DEFINE//", eventFunctionDefineStr.ToString());
+			
 			return template;
 		}
 	}
