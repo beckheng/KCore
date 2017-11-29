@@ -26,7 +26,8 @@ namespace KCore
 		{
 			if (string.IsNullOrEmpty(varName))
 			{
-				varName = transform.name;
+				//变量首字母小写
+				varName = transform.name.Substring(0, 1).ToLower() + transform.name.Substring(1);
 			}
 		}
 #endif
