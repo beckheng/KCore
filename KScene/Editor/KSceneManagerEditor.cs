@@ -145,7 +145,7 @@ public class KSceneManagerEditor : EditorWindow {
 			EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
 			
 			//创建并保存
-			Scene newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+			Scene newScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 		 	saveSceneOK = EditorSceneManager.SaveScene(newScene, scenePath);
 
 			return true;
