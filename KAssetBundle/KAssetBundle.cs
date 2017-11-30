@@ -264,6 +264,44 @@ namespace KCore
 			}
 		}
 
+		/// <summary>
+		/// 从AB资源中实例化一个GO(Model),要求AB资源必须已经提前加载进来,支持AB名自动补.u3d后缀,暂时规定assetName和ABName是一致的
+		/// </summary>
+		public static T InstantiateModel<T>(string assetName) where T : Component
+		{
+			string viewABName = assetName;
+
+			if (!viewABName.EndsWith(abNamePostfix))
+			{
+				viewABName += abNamePostfix;
+			}
+
+			T t = default(T);
+
+			if (!abMap.ContainsKey(viewABName))
+			{
+				Debug.LogError(Time.frameCount + "|no|ab|loaded");
+				return t;
+			}
+
+			GameObject go = abMap[viewABName].LoadAsset<GameObject>(assetName);
+
+			GameObject cloneGo = GameObject.Instantiate(go);
+			cloneGo.name = go.name;
+
+			T comp = cloneGo.GetComponent<T>();
+			if (comp != null)
+			{
+				Debug.Log(Time.frameCount + "|use|exists|comp");
+				return comp;
+			}
+			else
+			{
+				Debug.Log(Time.frameCount + "|add|comp");
+				return cloneGo.AddComponent<T>();
+			}
+		}
+
 	}
 
 }

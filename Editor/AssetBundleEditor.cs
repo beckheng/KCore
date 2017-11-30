@@ -92,6 +92,13 @@ namespace KCoreEditor
 		/// <returns></returns>
 		private static string GetABOutputPath(string assetPath)
 		{
+			//先判断类型
+			if (assetPath.EndsWith(".controller"))
+			{
+				return "Assets/StreamingAssets/Animators";
+			}
+
+			//再判断路径
 			if (assetPath.Contains("/Prefabs/View/"))
 			{
 				return "Assets/StreamingAssets/View";
