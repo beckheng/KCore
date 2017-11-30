@@ -104,7 +104,7 @@ namespace KCoreEditor
 			{
 				return "Assets/StreamingAssets/Effects";
 			}
-			else if (assetPath.Contains("/Arts/Models/"))
+			else if (assetPath.Contains("/Prefabs/Models/"))
 			{
 				return "Assets/StreamingAssets/Models";
 			}
