@@ -12,6 +12,9 @@ namespace KView
 	public partial class __CLASSNAME__ : KUIWindow
 	{
 		
+		/// <summary>
+		/// 在Awake时调用,在InitializeComponent后调用
+		/// </summary>
 		protected override void BindEvent()
 		{
 			//BIND_EVENT_STATEMENT//
@@ -22,6 +25,9 @@ namespace KView
 			return true;
 		}
 
+		/// <summary>
+		/// 内部调用此方法来设置数据
+		/// </summary>
 		protected override void SetData(object data)
 		{
 		}
