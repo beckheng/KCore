@@ -47,7 +47,7 @@ namespace KCoreEditor
 
 				string codeContent = GenCodeFromTemplate(win.transform, win.GetType().Name, KCoreEditorUtil.kuiEditorPath + "/AutoGenCodeTemplate.txt");
 
-				File.WriteAllText(outputName, codeContent);
+				File.WriteAllText(outputName, codeContent, System.Text.Encoding.UTF8);
 			}
 			else
 			{
@@ -68,7 +68,7 @@ namespace KCoreEditor
 
 				string codeContent = GenCodeFromTemplate(target.transform.root, theClassName, KCoreEditorUtil.kuiEditorPath + "/AutoGenCodeTemplate.txt");
 
-				File.WriteAllText(outputName, codeContent);
+				File.WriteAllText(outputName, codeContent, System.Text.Encoding.UTF8);
 
 				//同时生成主的class
 				string mainClassFileName = KCoreEditorUtil.kuiDefAutoGenPath + "/" + theClassName + ".cs";
@@ -76,7 +76,7 @@ namespace KCoreEditor
 				{
 					KLogger.Log("KUI|输出目录|mainClassFileName|" + mainClassFileName);
 					string mainCodeContent = GenCodeFromTemplate(target.transform.root, theClassName, KCoreEditorUtil.kuiEditorPath + "/UIMainCodeTemplate.txt");
-					File.WriteAllText(mainClassFileName, mainCodeContent);
+					File.WriteAllText(mainClassFileName, mainCodeContent, System.Text.Encoding.UTF8);
 				}
 			}
 			
