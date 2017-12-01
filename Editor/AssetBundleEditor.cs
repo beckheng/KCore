@@ -46,6 +46,7 @@ namespace KCoreEditor
 		/// 将所选文件打包为AB
 		/// </summary>
 		[MenuItem("KCore/Assetbundle/Buil AB(Selected OR All)", false, 1071)]
+		[MenuItem("Assets/KCore/Build AB(Selected)", false, 1000)]
 		public static void BuildAllAB()
 		{
 			if (Selection.objects.Length == 0)
