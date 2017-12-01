@@ -10,6 +10,8 @@ namespace KCore
 			tran = transform;
 
 			InitializeComponent();
+
+			BindEvent();
 		}
 
 		public sealed override void SetContent(object data)

@@ -6,7 +6,7 @@ using KData;
 
 namespace KView
 {
-	public partial class __CLASSNAME__ : KUIWindow
+	public sealed partial class __CLASSNAME__ : KUIWindow
 	{
 		/// Params Define
 __PARAMS_DECLARED__

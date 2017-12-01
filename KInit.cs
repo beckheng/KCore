@@ -11,7 +11,7 @@ namespace KCore
 	/// 游戏初始化时调用的类,基本上就是Unity加载第一个场景时会被调用一次的方法
 	/// </summary>
 	[DisallowMultipleComponent]
-	public class KInit : MonoBehaviour
+	public sealed class KInit : MonoBehaviour
 	{
 
 		/// <summary>
@@ -40,6 +40,8 @@ namespace KCore
 			DontDestroyOnLoad(go);
 
 			go.AddComponent<KInit>();
+
+			KSound.Init();
 		}
 
 		/// <summary>
