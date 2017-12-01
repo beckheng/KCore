@@ -169,7 +169,17 @@ namespace KCore
 				relativePath = "/" + relativePath;
 			}
 
-			string url = "file://" + Application.streamingAssetsPath + relativePath;
+			string url = null;
+			Debug.Log("Application.platform|" + Application.platform);
+			if (Application.platform == RuntimePlatform.Android)
+			{
+				url = Application.streamingAssetsPath + relativePath;
+			}
+			else
+			{
+				url = "file://" + Application.streamingAssetsPath + relativePath;
+			}
+			
 			using (WWW w = new WWW(url))
 			{
 				yield return w;
