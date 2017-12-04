@@ -147,8 +147,7 @@ namespace KCore
 				}
 
 				yield return LoadFromStreamAssets(thePath, (w) => {
-					Debug.Log(Time.frameCount + "|add|abmap|" + w.assetBundle.name + "|savein|" + theAbName);
-
+					//Debug.Log(Time.frameCount + "|add|abmap|" + w.assetBundle.name + "|savein|" + theAbName);
 					ApplyShaderForEditorMode(w.assetBundle);
 
 					abMap.Add(theAbName, w.assetBundle);
@@ -173,7 +172,6 @@ namespace KCore
 			}
 
 			string url = null;
-			Debug.Log("Application.platform|" + Application.platform);
 			if (Application.platform == RuntimePlatform.Android)
 			{
 				url = Application.streamingAssetsPath + relativePath;
@@ -353,14 +351,14 @@ namespace KCore
 				|| Application.platform == RuntimePlatform.OSXEditor)
 			{
 				GameObject[] gameObjectArray = ab.LoadAllAssets<GameObject>();
-				Debug.Log("ApplyShaderForEditorMode|AssetBundle|gameObjectArray|" + gameObjectArray.Length);
+				//Debug.Log("ApplyShaderForEditorMode|AssetBundle|gameObjectArray|" + gameObjectArray.Length);
 				for (int i = 0; i < gameObjectArray.Length; i++)
 				{
 					Renderer[] matArray = gameObjectArray[i].GetComponentsInChildren<Renderer>();
 					for (int j = 0; j < matArray.Length; j++)
 					{
 						// 注意这里要使用sharedmaterial,因为并未实例化
-						Debug.Log("ApplyShaderForEditorMode|Transform|j|" + j + "|renderer|" + matArray[j]);
+						//Debug.Log("ApplyShaderForEditorMode|Transform|j|" + j + "|renderer|" + matArray[j]);
 						Shader theShader = Shader.Find(matArray[j].sharedMaterial.shader.name);
 						matArray[j].sharedMaterial.shader = theShader;
 					}
