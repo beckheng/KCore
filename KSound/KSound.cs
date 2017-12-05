@@ -53,11 +53,21 @@ namespace KCore
 			}
 		}
 
+
+		/// <summary>
+		/// 调用bgAudioSource的Play播放音频文件,,直接使用已经预加载的AB资源
+		/// </summary>
+		/// <param name="volumeScale">音量缩放比</param>
+		public static void PlayBg(string audioABName, float volumeScale = 1.0f)
+		{
+			KSound.PlayBg(KAssetBundle.GetObject<AudioClip>(audioABName), volumeScale);
+		}
+
 		/// <summary>
 		/// 调用bgAudioSource的Play播放音频文件
 		/// </summary>
 		/// <param name="volumeScale">音量缩放比</param>
-		public static void PlayBg(AudioClip audioClip, float volumeScale = 1.0f)
+		private static void PlayBg(AudioClip audioClip, float volumeScale = 1.0f)
 		{
 			if (self.bgAudioSource.clip != null)
 			{
@@ -71,11 +81,20 @@ namespace KCore
 		}
 
 		/// <summary>
-		/// 调用oneShotAudioSource的PlayOneShot播放音频文件
+		/// 调用oneShotAudioSource的PlayOneShot播放音频文件,直接使用已经预加载的AB资源
+		/// </summary>
+		/// <param name="volumeScale">音量缩放比</param>
+		public static void PlayOneShot(string audioABName, float volumeScale = 1.0f)
+		{
+			PlayOneShot(KAssetBundle.GetObject<AudioClip>(audioABName), volumeScale);
+		}
+
+		/// <summary>
+		/// 调用oneShotAudioSource的PlayOneShot播放音频文件,游戏逻辑中请使用PlayOneShot(string)方法
 		/// 似乎在场景切换的时候,未播放完的音频也会被中断哦
 		/// </summary>
 		/// <param name="volumeScale">音量缩放比</param>
-		public static void PlayOneShot(AudioClip audioClip, float volumeScale = 1.0f)
+		private static void PlayOneShot(AudioClip audioClip, float volumeScale = 1.0f)
 		{
 			self.oneShotAudioSource.PlayOneShot(audioClip, volumeScale);
 		}
