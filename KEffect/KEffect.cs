@@ -17,6 +17,26 @@ public class KEffect {
 			eff.SetParent(parent, false);
 		}
 
+		bool isLoop = false;
+		float maxDuration = 0f;
+
+		ParticleSystem[] particleSystemArray = eff.GetComponentsInChildren<ParticleSystem>(false); //inactive的不参与处理
+		for (int i = 0; i < particleSystemArray.Length; i++)
+		{
+			isLoop = isLoop || particleSystemArray[i].loop;
+			if (particleSystemArray[i].duration > maxDuration)
+			{
+				maxDuration = particleSystemArray[i].duration;
+			}
+		}
+
+		if (!isLoop)
+		{
+			//非循环的特效才添加
+			KEffectControl effControl = eff.gameObject.AddComponent<KEffectControl>();
+			effControl.duration = maxDuration;
+		}
+		
 		return eff;
 	}
 	
