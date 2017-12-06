@@ -55,7 +55,18 @@ namespace KScene
 		public static void Load()
 		{
 			Scene scene = SceneManager.GetActiveScene(); //默认组件与场景名一致
+			
+			if (Application.platform == RuntimePlatform.WindowsEditor
+				|| Application.platform == RuntimePlatform.OSXEditor)
+			{
+				if (RenderSettings.skybox != null)
+				{
+					Shader theShader = Shader.Find(RenderSettings.skybox.shader.name);
 
+					RenderSettings.skybox.shader = theShader;
+				}
+			}
+			
 			//如果没有,则先添加组件
 			KSceneManager ks = GetCurKScene();
 			if (null == ks)
