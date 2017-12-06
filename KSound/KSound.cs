@@ -81,6 +81,15 @@ namespace KCore
 		}
 
 		/// <summary>
+		/// 设置背景音乐的音量
+		/// </summary>
+		/// <param name="volumeScale">音量缩放比</param>
+		public static void SetBGVolume(float volumeScale = 1.0f)
+		{
+			self.bgAudioSource.volume = 1.0f * volumeScale;
+		}
+
+		/// <summary>
 		/// 调用oneShotAudioSource的PlayOneShot播放音频文件,直接使用已经预加载的AB资源
 		/// </summary>
 		/// <param name="volumeScale">音量缩放比</param>
