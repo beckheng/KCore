@@ -350,17 +350,25 @@ namespace KCore
 			if (Application.platform == RuntimePlatform.WindowsEditor
 				|| Application.platform == RuntimePlatform.OSXEditor)
 			{
-				GameObject[] gameObjectArray = ab.LoadAllAssets<GameObject>();
-				//Debug.Log("ApplyShaderForEditorMode|AssetBundle|gameObjectArray|" + gameObjectArray.Length);
-				for (int i = 0; i < gameObjectArray.Length; i++)
+				if (ab.isStreamedSceneAssetBundle)
 				{
-					Renderer[] matArray = gameObjectArray[i].GetComponentsInChildren<Renderer>();
-					for (int j = 0; j < matArray.Length; j++)
+					//场景的处理
+				}
+				else
+				{
+					//预制的处理
+					GameObject[] gameObjectArray = ab.LoadAllAssets<GameObject>();
+					//Debug.Log("ApplyShaderForEditorMode|AssetBundle|gameObjectArray|" + gameObjectArray.Length);
+					for (int i = 0; i < gameObjectArray.Length; i++)
 					{
-						// 注意这里要使用sharedmaterial,因为并未实例化
-						//Debug.Log("ApplyShaderForEditorMode|Transform|j|" + j + "|renderer|" + matArray[j]);
-						Shader theShader = Shader.Find(matArray[j].sharedMaterial.shader.name);
-						matArray[j].sharedMaterial.shader = theShader;
+						Renderer[] matArray = gameObjectArray[i].GetComponentsInChildren<Renderer>();
+						for (int j = 0; j < matArray.Length; j++)
+						{
+							// 注意这里要使用sharedmaterial,因为并未实例化
+							//Debug.Log("ApplyShaderForEditorMode|Transform|j|" + j + "|renderer|" + matArray[j]);
+							Shader theShader = Shader.Find(matArray[j].sharedMaterial.shader.name);
+							matArray[j].sharedMaterial.shader = theShader;
+						}
 					}
 				}
 			}
