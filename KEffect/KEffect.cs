@@ -9,6 +9,25 @@ public class KEffect {
 	/// <summary>
 	/// 在预加载的AB实例化特效,可以指定parent,为方便额外的控制,返回值是Transform
 	/// </summary>
+	/// <param name="duration">特效生存周期</param>
+	public static Transform PlayFX(string abName, float duration, Transform parent = null)
+	{
+		Transform eff = KAssetBundle.InstantiateEffect(abName);
+		if (parent != null)
+		{
+			eff.SetParent(parent, false);
+		}
+		
+		// 设置特效生存周期
+		KEffectControl effControl = eff.gameObject.AddComponent<KEffectControl>();
+		effControl.duration = duration;
+
+		return eff;
+	}
+
+	/// <summary>
+	/// 在预加载的AB实例化特效,可以指定parent,为方便额外的控制,返回值是Transform
+	/// </summary>
 	public static Transform PlayFX(string abName, Transform parent = null)
 	{
 		Transform eff = KAssetBundle.InstantiateEffect(abName);
