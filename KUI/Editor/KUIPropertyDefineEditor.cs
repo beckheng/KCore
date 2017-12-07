@@ -130,7 +130,7 @@ namespace KCoreEditor
 					}
 				}
 				
-				paramsDeclaredStr.AppendFormat("\r\n		/// <summary>\r\n		/// {2}\r\n		/// </summary>\r\n		protected {0} {1};\r\n", typeName, varName, summaryStr);
+				paramsDeclaredStr.AppendFormat("\r\n		/// <summary>\r\n		/// {2}\r\n		/// </summary>\r\n		private {0} {1};\r\n", typeName, varName, summaryStr);
 				paramsAssignmentStr.AppendFormat("			{1} = tran.GetComponentByName<{0}>(\"{2}\");\r\n", typeName, varName, childPath);
 			}
 			
