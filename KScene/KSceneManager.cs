@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 namespace KScene
 {
@@ -56,6 +57,7 @@ namespace KScene
 		{
 			Scene scene = SceneManager.GetActiveScene(); //默认组件与场景名一致
 			
+			// 处理天空盒
 			if (Application.platform == RuntimePlatform.WindowsEditor
 				|| Application.platform == RuntimePlatform.OSXEditor)
 			{
@@ -65,6 +67,17 @@ namespace KScene
 
 					RenderSettings.skybox.shader = theShader;
 				}
+			}
+
+			// 添加EventSystem
+			EventSystem eventSystem = GameObject.FindObjectOfType<EventSystem>();
+			Debug.Log("eventSystem|" + eventSystem);
+			if (eventSystem == null)
+			{
+				Debug.Log("load|EventSystem|Prefab");
+				GameObject origGo = Resources.Load<GameObject>("EventSystem");
+				GameObject newGo = GameObject.Instantiate<GameObject>(origGo);
+				newGo.name = origGo.name;
 			}
 			
 			//如果没有,则先添加组件
