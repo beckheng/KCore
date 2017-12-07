@@ -73,12 +73,23 @@ namespace KScene
 			{
 				GameObject go = new GameObject();
 				go.name = "__" + scene.name + "__";
-				
-				System.Type t = System.Type.GetType("KScene." + scene.name + "Manager");
+
+				System.Type t = null;
+
+				string defaultClassName = "KScene." + scene.name + "Manager";
+
+				// 场景管理组件钩子
+				t = KSceneHook.GetManagerType(scene.name);
 
 				if (t == null)
 				{
-					Debug.LogError("cannot|find|type|" + "KScene." + scene.name + "Manager");
+					Debug.Log("use|default|type|" + defaultClassName);
+					t = System.Type.GetType(defaultClassName);
+				}
+
+				if (t == null)
+				{
+					Debug.LogError("cannot|find|default|type|" + defaultClassName);
 				}
 				else
 				{
