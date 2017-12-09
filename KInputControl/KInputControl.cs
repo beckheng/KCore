@@ -10,6 +10,7 @@ namespace KCore
 	/// <summary>
 	/// 设备的输入控制
 	/// </summary>
+	[DisallowMultipleComponent]
 	public class KInputControl : MonoBehaviour
 	{
 
