@@ -12,6 +12,19 @@ namespace KScene
 		protected object data = null;
 
 		/// <summary>
+		/// 缓存的对象本身
+		/// </summary>
+		protected Transform tran = null;
+
+		/// <summary>
+		/// 继承于MonoBehaviour的方法
+		/// </summary>
+		void Awake()
+		{
+			tran = transform;
+		}
+
+		/// <summary>
 		/// 加载跳转到某一场景
 		/// TODO 跳转到自己会是怎么样呢?
 		/// </summary>
