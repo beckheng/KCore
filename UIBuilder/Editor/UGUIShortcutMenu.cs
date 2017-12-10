@@ -149,8 +149,9 @@ namespace KCoreEditor
 				GameObject insertControl = Selection.activeGameObject;
 				Text t = insertControl.GetComponent<Text>();
 				t.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-				//AssetDatabase.LoadAssetAtPath<Font>("Assets/Art/UI/Font/msyhbd.");
 				t.color = Color.white;
+				t.horizontalOverflow = HorizontalWrapMode.Overflow;
+				t.verticalOverflow = VerticalWrapMode.Overflow;
 
 				SetControlPos(selectedGo, insertControl);
 			}
