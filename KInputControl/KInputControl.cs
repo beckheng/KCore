@@ -14,13 +14,40 @@ namespace KCore
 	public class KInputControl : MonoBehaviour
 	{
 
-		Dictionary<string, System.Action> inputCallbackMap = new Dictionary<string, System.Action>();
+		/// <summary>
+		/// 输入控制的数据结构
+		/// </summary>
+		private sealed class KInputStruct
+		{
+			/// <summary>
+			/// 按钮回调
+			/// </summary>
+			public System.Action cb;
+
+			/// <summary>
+			/// 有效输入的间隔
+			/// </summary>
+			public float interval;
+
+			/// <summary>
+			/// 上一次有效输入的时间,默认0,之后一直以Time.Time来赋值
+			/// </summary>
+			public float lastInputTime;
+
+			public override string ToString()
+			{
+				return "|interval|" + interval + "|lastInputTime|" + lastInputTime;
+			}
+		}
+
+		Dictionary<string, KInputStruct> inputCallbackMap = new Dictionary<string, KInputStruct>();
 		List<string> bindNames = new List<string>();
 
 		/// <summary>
 		/// 添加输入控制的映射方法
 		/// </summary>
-		public void AddControlBinding(string axisName, System.Action cb)
+		/// <param name="interval">有效输入的间隔,类似于AABB左左右右的未想好</param>
+		public void AddControlBinding(string axisName, System.Action cb, float interval = 0.2f)
 		{
 			if (cb == null)
 			{
@@ -28,13 +55,17 @@ namespace KCore
 				return;
 			}
 
+			KInputStruct inputStruct = new KInputStruct();
+			inputStruct.cb = cb;
+			inputStruct.interval = interval;
+
 			if (inputCallbackMap.ContainsKey(axisName))
 			{
-				inputCallbackMap[axisName] = cb;
+				inputCallbackMap[axisName] = inputStruct;
 			}
 			else
 			{
-				inputCallbackMap.Add(axisName, cb);
+				inputCallbackMap.Add(axisName, inputStruct);
 				bindNames.Add(axisName);
 			}
 		}
@@ -48,8 +79,15 @@ namespace KCore
 			{
 				if (Input.GetAxis(bindNames[i]) != 0)
 				{
-					Debug.Log(Time.frameCount + "|" + this + "|" + bindNames[i]  + "|" + Input.GetAxis(bindNames[i]));
-					inputCallbackMap[bindNames[i]]();
+					KInputStruct inputStruct = inputCallbackMap[bindNames[i]];
+
+					if ((Time.time - inputStruct.lastInputTime) >= inputStruct.interval)
+					{
+						Debug.Log(Time.frameCount + "|" + this + "|" + bindNames[i] + "|" + Input.GetAxis(bindNames[i]) + "|inputStruct|" + inputStruct.ToString());
+						inputStruct.lastInputTime = Time.time;
+
+						inputStruct.cb();
+					}
 				}
 			}
 		}
