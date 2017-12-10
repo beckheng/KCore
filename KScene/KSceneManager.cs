@@ -3,9 +3,14 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+using KCore;
+
 namespace KScene
 {
 
+	/// <summary>
+	/// 每个子类的KsceneManager都是会挂到一个GameObject的
+	/// </summary>
 	[DisallowMultipleComponent]
 	public abstract class KSceneManager : MonoBehaviour
 	{
@@ -25,11 +30,24 @@ namespace KScene
 		}
 
 		/// <summary>
+		/// 切换场景的统一调用,简化切换场景的代码
+		/// </summary>
+		public static void SwitchScene(string[] preloadABs, string sceneName)
+		{
+			KSceneManager ks = GetCurKScene();
+
+			ks.StartCoroutine(KAssetBundle.LoadPersistentAB(preloadABs, () => {
+				SceneManager.LoadSceneAsync(sceneName);
+			}));
+		}
+
+		/// <summary>
 		/// 加载跳转到某一场景
 		/// TODO 跳转到自己会是怎么样呢?
+		/// 暂时未用到
 		/// </summary>
 		/// <param name="showLoading">默认是TRUE,大概只有在Splash后的跳转,才是FALSE吧</param>
-		public static void GotoScene<T>(object data, bool showLoading = true) where T : KSceneManager
+		private static void GotoScene<T>(object data, bool showLoading = true) where T : KSceneManager
 		{
 			string typeName = typeof(T).Name;
 			
