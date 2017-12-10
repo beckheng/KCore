@@ -125,7 +125,7 @@ namespace KCore
 		}
 
 		/// <summary>
-		/// 加载持久的AB,支持AB名自动补.u3d后缀
+		/// 加载持久的AB,支持AB名自动补.u3d后缀,要注意这是个协程,调用的时候请加上StartCoroutine
 		/// </summary>
 		public static IEnumerator LoadPersistentAB(string[] relativePaths, System.Action onSucc, System.Action onError = null)
 		{
