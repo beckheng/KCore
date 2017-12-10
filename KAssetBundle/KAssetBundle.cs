@@ -350,11 +350,7 @@ namespace KCore
 			if (Application.platform == RuntimePlatform.WindowsEditor
 				|| Application.platform == RuntimePlatform.OSXEditor)
 			{
-				if (ab.isStreamedSceneAssetBundle)
-				{
-					//场景的处理
-				}
-				else
+				if (!ab.isStreamedSceneAssetBundle)
 				{
 					//预制的处理
 					GameObject[] gameObjectArray = ab.LoadAllAssets<GameObject>();
@@ -373,7 +369,39 @@ namespace KCore
 				}
 			}
 		}
-		
+
+		/// <summary>
+		/// 在Editor模式下,重新赋值一次shader,以令显示正常,这里传入的是Scene(整个场景),同时处理天空盒
+		/// </summary>
+		public static void ApplyShaderForEditorMode(Scene scene)
+		{
+			if (Application.platform == RuntimePlatform.WindowsEditor
+				|| Application.platform == RuntimePlatform.OSXEditor)
+			{
+				// 处理天空盒
+				if (RenderSettings.skybox != null)
+				{
+					Shader theShader = Shader.Find(RenderSettings.skybox.shader.name);
+
+					RenderSettings.skybox.shader = theShader;
+				}
+
+				//处理场景内的GameObject
+				GameObject[] gameObjectArray = GameObject.FindObjectsOfType<GameObject>();
+				for (int i = 0; i < gameObjectArray.Length; i++)
+				{
+					Renderer[] matArray = gameObjectArray[i].GetComponentsInChildren<Renderer>();
+					for (int j = 0; j < matArray.Length; j++)
+					{
+						// 注意这里要使用material,因为已经实例化(和更改AB的Asset不一样)
+						Shader theShader = Shader.Find(matArray[j].material.shader.name);
+						matArray[j].material.shader = theShader;
+					}
+				}
+			}
+		}
+
+
 	}
 
 }

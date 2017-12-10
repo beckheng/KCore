@@ -35,7 +35,7 @@ namespace KScene
 		public static void SwitchScene(string[] preloadABs, string sceneName)
 		{
 			KSceneManager ks = GetCurKScene();
-
+			
 			ks.StartCoroutine(KAssetBundle.LoadPersistentAB(preloadABs, () => {
 				SceneManager.LoadSceneAsync(sceneName);
 			}));
@@ -88,18 +88,8 @@ namespace KScene
 		{
 			Scene scene = SceneManager.GetActiveScene(); //默认组件与场景名一致
 			
-			// 处理天空盒
-			if (Application.platform == RuntimePlatform.WindowsEditor
-				|| Application.platform == RuntimePlatform.OSXEditor)
-			{
-				if (RenderSettings.skybox != null)
-				{
-					Shader theShader = Shader.Find(RenderSettings.skybox.shader.name);
-
-					RenderSettings.skybox.shader = theShader;
-				}
-			}
-
+			KAssetBundle.ApplyShaderForEditorMode(scene);
+			
 			// 添加EventSystem
 			EventSystem eventSystem = GameObject.FindObjectOfType<EventSystem>();
 			Debug.Log("eventSystem|" + eventSystem);
