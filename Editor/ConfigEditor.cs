@@ -42,6 +42,18 @@ namespace KCoreEditor
 			ProcessUtilEditor.StartProcess("perl", creatorPath + "/gen_protobuf_cs.pl " + projectPath);
 		}
 
+		[MenuItem("KCore/打开配置数据目录", false, 1053)]
+		private static void OpenExcelPath()
+		{
+			YamlMappingNode mapping = GetYamlMappingNode();
+
+			string projectName = mapping.Children[new YamlScalarNode("projectName")].ToString();
+			string projectPath = Application.dataPath + "/../..";
+
+			string excelPath = projectPath + "/" + projectName + "_GameDesign/excels";
+			ProcessUtilEditor.OpenURL(excelPath);
+		}
+
 		/// <summary>
 		/// 加载由GameCreator生成的YAML配置文件
 		/// </summary>
