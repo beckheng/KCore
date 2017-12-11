@@ -22,7 +22,7 @@ namespace KCore
 			/// <summary>
 			/// 按钮回调
 			/// </summary>
-			public System.Action cb;
+			public System.Action<float> cb;
 
 			/// <summary>
 			/// 有效输入的间隔
@@ -47,11 +47,17 @@ namespace KCore
 		/// 添加输入控制的映射方法
 		/// </summary>
 		/// <param name="interval">有效输入的间隔,类似于AABB左左右右的未想好</param>
-		public void AddControlBinding(string axisName, System.Action cb, float interval = 0.2f)
+		public void AddControlBinding(string axisName, System.Action<float> cb, float interval = 0.2f)
 		{
 			if (cb == null)
 			{
 				Debug.LogError(Time.frameCount + "|" + this + "|AddControlBinding|no|callback|for|" + axisName);
+				return;
+			}
+
+			if (string.IsNullOrEmpty(axisName))
+			{
+				Debug.LogError(Time.frameCount + "|" + this + "|AddControlBinding|no|axisName");
 				return;
 			}
 
@@ -86,7 +92,7 @@ namespace KCore
 						Debug.Log(Time.frameCount + "|" + this + "|" + bindNames[i] + "|" + Input.GetAxis(bindNames[i]) + "|inputStruct|" + inputStruct.ToString());
 						inputStruct.lastInputTime = Time.time;
 
-						inputStruct.cb();
+						inputStruct.cb(Input.GetAxis(bindNames[i]));
 					}
 				}
 			}
