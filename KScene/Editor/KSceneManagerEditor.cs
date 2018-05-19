@@ -75,7 +75,7 @@ public class KSceneManagerEditor : EditorWindow {
 			// 生成一个新的场景
 			isNeedCreateScene = CreateEmptyScene(finalSceneName);
 
-			string scriptDir = Application.dataPath + "/Plugins/KScene";
+			string scriptDir = Application.dataPath + "/Standard Assets/KScene";
 			string scriptPath = scriptDir + "/" + finalSceneName + "Manager.cs";
 
 			if (File.Exists(scriptPath))
