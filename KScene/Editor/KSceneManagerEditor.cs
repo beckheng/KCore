@@ -120,9 +120,12 @@ public class KSceneManagerEditor : EditorWindow {
 			}
 		}
 
+		GUIStyle st = new GUIStyle();
+		st.wordWrap = true;
+		
 		for (int i = 0; i < tips.Count; i++)
 		{
-			EditorGUILayout.LabelField(" ", tips[i]);
+			EditorGUILayout.LabelField(tips[i], st);
 		}
 	}
 
