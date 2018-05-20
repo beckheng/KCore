@@ -37,6 +37,13 @@ public class KViewEditor : EditorWindow {
 
 		if (GUILayout.Button("创  建"))
 		{
+			KGameSetting kGameSetting = KGameSetting.LoadKGameSetting();
+			if (kGameSetting == null)
+			{
+				EditorUtility.DisplayDialog("错误", "游戏开发设定未创建,请点击菜单 \"KCore/游戏开发设定\" ", "确定");
+				return;
+			}
+			
 			string finalWindowName = theWindowName.Trim();
 
 			if (string.IsNullOrEmpty(finalWindowName))
@@ -60,7 +67,7 @@ public class KViewEditor : EditorWindow {
 
 				CanvasScaler cs = insertControl.GetComponent<CanvasScaler>();
 				cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-				cs.referenceResolution = new Vector2(1136, 640);
+				cs.referenceResolution = new Vector2(kGameSetting.resolutionWidth, kGameSetting.resolutionHeight);
 				cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
 				cs.matchWidthOrHeight = 0;
 			}

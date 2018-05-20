@@ -24,15 +24,31 @@ namespace KCore
 			Application.runInBackground = true;
 #endif
 
-			if (Application.isMobilePlatform)
+			KGameSetting kGameSetting = KGameSetting.LoadKGameSetting();
+			if (kGameSetting == null)
 			{
-				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|30");
-				Application.targetFrameRate = 30;
+				//重要的事情说三遍
+				for (int i = 0; i < 3; i++)
+				{
+					Debug.LogError("KGameSetting|was|not|found|on|Resources/KGameSetting.asset|请点击菜单 \"KCore/游戏开发设定\"");
+				}
+				return;
+			}
+
+			if (Application.platform == RuntimePlatform.Android)
+			{
+				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|" + kGameSetting.androidFrameRate);
+				Application.targetFrameRate = kGameSetting.androidFrameRate;
+			}
+			else if (Application.platform == RuntimePlatform.IPhonePlayer)
+			{
+				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|" + kGameSetting.iOSFrameRate);
+				Application.targetFrameRate = kGameSetting.iOSFrameRate;
 			}
 			else
 			{
-				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|60");
-				Application.targetFrameRate = 60;
+				Debug.Log(Time.frameCount + "|" + Time.timeSinceLevelLoad + "|set|targetFrameRate|" + kGameSetting.otherPlatformFrameRate);
+				Application.targetFrameRate = kGameSetting.otherPlatformFrameRate;
 			}
 
 			GameObject go = new GameObject();
