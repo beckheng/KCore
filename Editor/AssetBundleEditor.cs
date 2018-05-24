@@ -76,7 +76,7 @@ namespace KCoreEditor
 
 				AssetBundleBuild[] buildMap = new AssetBundleBuild[1];
 
-				buildMap[0].assetBundleName = obj.name + KAssetBundle.abNamePostfix;
+				buildMap[0].assetBundleName = obj.name.ToLower() + KAssetBundle.abNamePostfix;
 				buildMap[0].assetNames = new string[] { AssetDatabase.GetAssetPath(obj) };
 
 				BuildPipeline.BuildAssetBundles(outputPath, buildMap, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
@@ -116,7 +116,7 @@ namespace KCoreEditor
 			{
 				return "Assets/StreamingAssets/Models";
 			}
-			else if (assetPath.Contains("/Arts/Scenes/"))
+			else if (assetPath.Contains("/Scenes/"))
 			{
 				return "Assets/StreamingAssets/Scenes";
 			}
