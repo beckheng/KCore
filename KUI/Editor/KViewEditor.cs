@@ -70,6 +70,13 @@ public class KViewEditor : EditorWindow {
 				cs.referenceResolution = new Vector2(kGameSetting.resolutionWidth, kGameSetting.resolutionHeight);
 				cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
 				cs.matchWidthOrHeight = 0;
+
+				// 添加一个默认的空节点,用来生成代码
+				GameObject codeGenDummy = new GameObject("CodeGenDummy");
+				codeGenDummy.transform.SetParent(insertControl.transform);
+				codeGenDummy.transform.localPosition = Vector3.zero;
+
+				codeGenDummy.AddComponent<KUIPropertyDefine>();
 			}
 		}
 	}
