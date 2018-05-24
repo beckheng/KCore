@@ -59,3 +59,4 @@ KCore Lib
 
 ## 感谢
 
+1. https://github.com/NtreevSoft/psd-parser
