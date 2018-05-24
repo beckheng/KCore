@@ -31,7 +31,7 @@ public class KViewEditor : EditorWindow {
 		
 		EditorGUILayout.BeginHorizontal();
 		{
-			theWindowName = EditorGUILayout.TextField("场景名字: ", theWindowName);
+			theWindowName = EditorGUILayout.TextField("View-Window名字: ", theWindowName);
 		}
 		EditorGUILayout.EndHorizontal();
 

@@ -161,7 +161,7 @@ namespace KCore
 		}
 
 		/// <summary>
-		/// 仅仅是从StreamAssets加载
+		/// 仅仅是从StreamAssets加载,暂时用于配置表加载
 		/// </summary>
 		/// <param name="relativePath">Assets/StreamingAssets下的相对路径</param>
 		public static IEnumerator LoadFromStreamAssets(string relativePath, System.Action<WWW> onSucc, System.Action<WWW> onError = null)
@@ -239,9 +239,16 @@ namespace KCore
 
 		/// <summary>
 		/// 从AB资源中实例化一个View(UI),要求AB资源必须已经提前加载进来,支持AB名自动补.u3d后缀,暂时规定assetName和ABName是一致的
+		/// <param name="assetName">如果不指定assetName,则assetName=type(T).Name.toLower()</param>
 		/// </summary>
-		public static T InstantiateView<T>(string assetName) where T : Component
+		public static T InstantiateView<T>(string assetName = null) where T : Component
 		{
+			if (string.IsNullOrEmpty(assetName))
+			{
+				assetName = typeof(T).Name;
+			}
+
+			assetName = assetName.ToLower();
 			string viewABName = assetName;
 
 			if (!viewABName.EndsWith(abNamePostfix))
@@ -280,6 +287,7 @@ namespace KCore
 		/// </summary>
 		public static T InstantiateModel<T>(string assetName) where T : Component
 		{
+			assetName = assetName.ToLower();
 			string viewABName = assetName;
 
 			if (!viewABName.EndsWith(abNamePostfix))
@@ -318,6 +326,7 @@ namespace KCore
 		/// </summary>
 		public static Transform InstantiateEffect(string assetName)
 		{
+			assetName = assetName.ToLower();
 			string viewABName = assetName;
 
 			if (!viewABName.EndsWith(abNamePostfix))
@@ -339,6 +348,55 @@ namespace KCore
 			//ApplyShaderForEditorMode(cloneGo.transform);
 
 			return cloneGo.transform;
+		}
+
+		/// <summary>
+		/// View的AB路径
+		/// </summary>
+		public static string GetViewPah(string viewName)
+		{
+			viewName = viewName.ToLower();
+
+			if (!viewName.EndsWith(abNamePostfix))
+			{
+				viewName += abNamePostfix;
+			}
+
+			return "View/" + viewName;
+		}
+
+		/// <summary>
+		/// 音乐/音效的AB路径
+		/// </summary>
+		/// <param name="soundName"></param>
+		/// <returns></returns>
+		public static string GetSoundPah(string soundName)
+		{
+			soundName = soundName.ToLower();
+
+			if (!soundName.EndsWith(abNamePostfix))
+			{
+				soundName += abNamePostfix;
+			}
+
+			return "Sounds/" + soundName;
+		}
+
+		/// <summary>
+		/// 特效的AB路径
+		/// </summary>
+		/// <param name="effectName"></param>
+		/// <returns></returns>
+		public static string GetEffectPah(string effectName)
+		{
+			effectName = effectName.ToLower();
+
+			if (!effectName.EndsWith(abNamePostfix))
+			{
+				effectName += abNamePostfix;
+			}
+
+			return "Effects/" + effectName;
 		}
 
 		/// <summary>
