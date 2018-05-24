@@ -27,7 +27,7 @@ KCore Lib
 
 3. 在Scenes in build添加SplashScene为首个场景
 
-4. 新建View-Window: LoadingProgressWindow, 添加UI相关内容, 为有需要的控制添加KUIPropertyDefine组件,如果没有需要,也必须为一个指定.这样才能生成窗体代码
+4. 新建View-Window: LoadingProgressWindow, 添加UI相关内容, 为有需要的控制添加KUIPropertyDefine组件,每个View-Window都自动带了一个名为CodeGenDummy的GameObject.确保总是能生成窗体代码.
 
 5. 将LoadingProgressWindow存为预制,根目录为Prefabs/View
 
