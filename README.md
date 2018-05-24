@@ -45,7 +45,7 @@ KCore Lib
 
 9. 运行菜单: 从首场景开始游戏
 
-## 常用的API介绍
+## 常用的API/变量介绍
 
 1. KAssetBundle.LoadPersistentAB 异步加载AB,加载完成后,执行onSucc回调
 
@@ -60,6 +60,8 @@ KCore Lib
 6. KAssetBundle.GetScenePath 这个方法的场景名称使用小写没有问题, 但是要 **特别特别特别** 注意使用SceneManager.LoadSceneAsync的场景名字,是要保持和场景文件一致的
 
 7. KSceneManager.SwitchScene
+
+8. KConfigLoader.allConfigLoaded 表示配置表是否加载完成
 
 ## 使用Unity开发的一些小建议
 
