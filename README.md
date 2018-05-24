@@ -51,11 +51,13 @@ KCore Lib
 
 2. KAssetBundle.InstantiateView 从AB实例化一个View
 
-3. KAssetBundle.GetViewPah
+3. KAssetBundle.GetViewPath
 
-4. KAssetBundle.GetEffectPah
+4. KAssetBundle.GetEffectPath
 
-5. KAssetBundle.GetSoundPah
+5. KAssetBundle.GetSoundPath
+
+6. KAssetBundle.GetScenePath 这个方法的场景名称使用小写没有问题, 但是要 **特别特别特别** 注意使用SceneManager.LoadSceneAsync的场景名字,是要保持和场景文件一致的
 
 7. KSceneManager.SwitchScene
 
