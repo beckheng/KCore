@@ -126,12 +126,21 @@ namespace KCoreEditor
 					}
 					else
 					{
-						KLogger.LogError("没有添加要处理的类型,请补充一下咯", defines[i].gameObject);
+						typeName = typeof(Transform).Name;
+						KLogger.LogError("没有添加要处理的类型,使用默认类型|Transform|", defines[i].gameObject);
 					}
 				}
 				
 				paramsDeclaredStr.AppendFormat("\r\n		/// <summary>\r\n		/// {2}\r\n		/// </summary>\r\n		private {0} {1};\r\n", typeName, varName, summaryStr);
-				paramsAssignmentStr.AppendFormat("			{1} = tran.GetComponentByName<{0}>(\"{2}\");\r\n", typeName, varName, childPath);
+
+				if (typeof(Transform).Name.Equals(typeName))
+				{
+					paramsAssignmentStr.AppendFormat("			{1} = tran.GetComponent<{0}>();\r\n", typeName, varName);
+				}
+				else
+				{
+					paramsAssignmentStr.AppendFormat("			{1} = tran.GetComponentByName<{0}>(\"{2}\");\r\n", typeName, varName, childPath);
+				}
 			}
 			
 			template = template.Replace("__CLASSNAME__", className);
