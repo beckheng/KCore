@@ -142,7 +142,7 @@ namespace KCore
 
 				if (abMap.ContainsKey(theAbName))
 				{
-					Debug.LogError(Time.frameCount + "|duplicate|load|" + thePath);
+					Debug.LogError(Time.frameCount + "|duplicate|load|" + theAbName + "|" + thePath);
 					continue;
 				}
 
@@ -353,7 +353,7 @@ namespace KCore
 		/// <summary>
 		/// View的AB路径
 		/// </summary>
-		public static string GetViewPah(string viewName)
+		public static string GetViewPath(string viewName)
 		{
 			viewName = viewName.ToLower();
 
@@ -370,7 +370,7 @@ namespace KCore
 		/// </summary>
 		/// <param name="soundName"></param>
 		/// <returns></returns>
-		public static string GetSoundPah(string soundName)
+		public static string GetSoundPath(string soundName)
 		{
 			soundName = soundName.ToLower();
 
@@ -387,7 +387,7 @@ namespace KCore
 		/// </summary>
 		/// <param name="effectName"></param>
 		/// <returns></returns>
-		public static string GetEffectPah(string effectName)
+		public static string GetEffectPath(string effectName)
 		{
 			effectName = effectName.ToLower();
 
@@ -397,6 +397,23 @@ namespace KCore
 			}
 
 			return "Effects/" + effectName;
+		}
+
+		/// <summary>
+		/// 场景的AB路径
+		/// </summary>
+		/// <param name="sceneName"></param>
+		/// <returns></returns>
+		public static string GetScenePath(string sceneName)
+		{
+			sceneName = sceneName.ToLower();
+
+			if (!sceneName.EndsWith(abNamePostfix))
+			{
+				sceneName += abNamePostfix;
+			}
+
+			return "Scenes/" + sceneName;
 		}
 
 		/// <summary>
